@@ -1,30 +1,58 @@
 (ns codewars.reporter
-  (:require [clojure.test :as test]))
+  (:require [clojure.test :as t]
+            [clojure.string :as s]
+            [clojure.stacktrace :as stack]))
+
+(defn- escape-lf [x] (s/replace x "\n" "<:LF:>"))
+
+(defn- with-message [status {:keys [:message]}]
+  (if (string? message) (escape-lf message) status))
+
+(defn- expr-str [expression]
+  (if (instance? Throwable expression)
+    (with-out-str
+      (stack/print-cause-trace expression t/*stack-trace-depth*))
+    (pr-str expression)))
+
+(defn- expectations-str [{:keys [:expected :actual]}]
+  (escape-lf (str "expected: " (pr-str expected) "\n  actual: " (expr-str actual))))
+
+(defn- error-str [{:keys [:actual]}]
+  (escape-lf (expr-str actual)))
 
 (defmulti report
   :type)
 
-(defmethod report :default [m])
+(defmethod report :pass [_]
+  (t/with-test-out
+    (println (str "\n<IT::>" (t/testing-contexts-str)))
+    (t/inc-report-counter :pass)
+    (println "\n<PASSED::>Test Passed")
+    (println "\n<COMPLETEDIN::>")))
 
-(defmethod report :pass [m]
-  (test/with-test-out (test/inc-report-counter :pass)))
+(defmethod report :fail [m]
+  (t/with-test-out
+    (println (str "\n<IT::>" (t/testing-contexts-str)))
+    (t/inc-report-counter :fail)
+    (println (str "\n<FAILED::>" (with-message "Test Failed" m) "<:LF:>" (expectations-str m)))
+    (println "\n<COMPLETEDIN::>")))
 
-(defmethod report :fail [{:keys [message expected] :as m}]
-  (test/with-test-out
-    (test/inc-report-counter :fail)
-    (println "fail")
-    ))
+(defmethod report :error [m]
+  (t/with-test-out
+    (println (str "\n<IT::>" (t/testing-contexts-str)))
+    (t/inc-report-counter :error)
+    (println (str "\n<ERROR::>" (error-str m)))
+    (println "\n<COMPLETEDIN::>")))
 
-(defmethod report :error [{:keys [message expected actual] :as m}]
-  (test/with-test-out
-    (test/inc-report-counter :error)
-    (println "error")))
+(defmethod report :begin-test-var [m]
+  (t/with-test-out
+    (println (str "\n<DESCRIBE::>" (pr-str (-> m :var (. sym)))))))
 
-(defmethod report :long-test [{:keys [duration] :as m}]
-  (test/with-test-out
-    (println "report long test")))
+(defmethod report :end-test-var [_]
+  (t/with-test-out
+    (println "\n<COMPLETEDIN::>")))
 
-(defmethod report :summary [{:keys [test pass fail error duration]}]
-  (let [total (+ pass fail error)]
-    (test/with-test-out
-      (println "summary"))))
+(defmethod report :summary [_])
+(defmethod report :begin-test-run [_])
+(defmethod report :begin-test-ns [_])
+(defmethod report :end-test-ns [_])

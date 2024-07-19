@@ -1,4 +1,3 @@
-(ns solution)
+(ns codewars.solution)
 
-(defn add [a b]
-  (+ a b))
+(defn multiply [a b] (* a b))

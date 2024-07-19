@@ -1,8 +1,11 @@
-(ns solution-test
-  (:require [clojure.test :refer [deftest is testing]]
-            [my-clojure-project.core :refer [add]]))
+(ns codewars.solution-test
+  (:require [clojure.test :refer :all]
+            [codewars.solution :refer [multiply]]))
 
-(deftest test-add
-  (testing "Addition function"
-    (is (= 3 (add 1 2)))
-    (is (= 5 (add 2 3)))))
+(def foo 1)
+(deftest a-test
+  (testing "FIXME, I fail."
+    (is (= 3 (multiply 1 2)))
+    (is (= 1 (/ 0 0)))
+    (is nil)
+    (is (< foo 0))))

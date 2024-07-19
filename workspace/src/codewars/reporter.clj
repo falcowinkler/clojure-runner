@@ -33,10 +33,10 @@
 
 (defmulti report :type)
 
-(defmethod report :summary [_])
-(defmethod report :begin-test-run [_])
-(defmethod report :begin-test-ns [_])
-(defmethod report :end-test-ns [_])
+(defmethod report :summary [])
+(defmethod report :begin-test-run [m] (t/with-test-out (println "begin-test-run" m)))
+(defmethod report :begin-test-ns [m] (t/with-test-out (println "begin-test-ns" m)))
+(defmethod report :end-test-ns [m] (t/with-test-out (println "end-test-ns" m)))
 
 (defmethod report :pass [_]
   (print-it-block)

@@ -3,9 +3,14 @@
             [codewars.solution :refer [multiply]]))
 
 (def foo 1)
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 3 (multiply 1 2)))
-    (is (= 1 (/ 0 0)))
-    (is nil)
-    (is (< foo 0))))
+(deftest test-multiply-fn
+  (testing "Multiply works correctly for positive numbers"
+    (is (= 2 (multiply 1 2)))
+    (is (= 20 (multiply 5 4)))
+    (is (= 0 (multiply 0 2)))
+    (is (= 56088 (multiply 123 456)))
+    (is (= 1/2 (multiply 1 1/2)))
+    )
+  (testing "negative numbers"
+    (is (= -1 (multiply -1 1)))
+    (is (= 1 (multiply -1 -1)))))

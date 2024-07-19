@@ -1,0 +1,75 @@
+# Yar, these be the forbidden treasures to ignore in a Clojure project!
+
+# Leiningen's loot
+/.lein-repl-history
+/.lein/
+target/
+checkouts/
+
+# Clojure's compiled booty
+classes/
+
+# Festering secrets of the IntelliJ
+.idea/
+*.iml
+
+# Undesirable plunder from Emacs
+*~
+\#*#
+.#*
+
+# Secret stash from Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Private bounty from Vim
+*.swp
+*.swo
+*.swn
+session.vim
+
+# Thar be no need for node_modules aboard this vessel
+node_modules/
+
+# Captain, this ship's wheel be spinnin' with Mac or Windows OS junk
+.DS_Store
+Thumbs.db
+
+# If ye be runnin' tests, keep the cursed reports out o' the repository
+/.test-results/
+
+# Various logs to send to Davy Jones' locker
+*.log
+
+# The infernal temporary files
+*.tmp
+
+# If ye be usin' Docker, ignore the following
+.dockerignore
+Dockerfile
+
+# Yarn treasures
+.yarn/
+.yarnrc
+
+# If Python be joinin' this voyage
+venv/
+__pycache__/
+
+# Java's secret booty
+*.class
+*.jar
+*.war
+
+# Miscellaneous digital flotsam
+*.bak
+
+# Aye, if ye might've built this ship with shadow-cljs:
+/out/
+.shadow-cljs/
+
+# REPL mare's-nests and other foul detritus
+repl-history
+
+# More hidden secrets best kept at bay
+*.pid

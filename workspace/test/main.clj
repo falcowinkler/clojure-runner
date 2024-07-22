@@ -1,5 +1,6 @@
-(ns codewars.reporter
+(ns main
   (:require [clojure.test :as t]
+            [codewars.solution-test]
             [clojure.string :as s]
             [clojure.stacktrace :as stack]))
 
@@ -33,10 +34,10 @@
 
 (defmulti report :type)
 
-(defmethod report :summary [])
-(defmethod report :begin-test-run [m] (t/with-test-out (println "begin-test-run" m)))
-(defmethod report :begin-test-ns [m] (t/with-test-out (println "begin-test-ns" m)))
-(defmethod report :end-test-ns [m] (t/with-test-out (println "end-test-ns" m)))
+(defmethod report :summary [_])
+(defmethod report :begin-test-run [_])
+(defmethod report :begin-test-ns [_] )
+(defmethod report :end-test-ns [_])
 
 (defmethod report :pass [_]
   (print-it-block)
@@ -66,3 +67,10 @@
 (defmethod report :end-test-var [_]
   (t/with-test-out
     (println "\n<COMPLETEDIN::>")))
+
+(defn run-tests [& namespaces]
+  (binding [t/report report]
+    (apply t/run-tests namespaces)))
+
+(defn -main []
+  (run-tests 'codewars.solution-test))

@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -eu
 
 if [ -z "${CONTAINER_ENGINE:+x}" ]; then
     CONTAINER_ENGINE=docker

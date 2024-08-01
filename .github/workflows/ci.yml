@@ -20,6 +20,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: false
+          context: .
           # Make the image available in next step
           load: true
           tags: codewars-clojure-runner:latest

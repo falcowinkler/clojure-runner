@@ -44,10 +44,6 @@ Thumbs.db
 # The infernal temporary files
 *.tmp
 
-# If ye be usin' Docker, ignore the following
-.dockerignore
-Dockerfile
-
 # Yarn treasures
 .yarn/
 .yarnrc

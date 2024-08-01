@@ -19,7 +19,6 @@ jobs:
       - name: Build image
         uses: docker/build-push-action@v6
         with:
-          context: .
           push: false
           # Make the image available in next step
           load: true

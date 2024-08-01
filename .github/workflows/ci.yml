@@ -25,11 +25,11 @@ jobs:
           tags: codewars-clojure-runner:latest
 
       - name: Run multiply example
-        run: bin/run multiply
+        run: bin/run.sh multiply
 
       - name: Run multiply-failing example
-        run: bin/run multiply-failing || true
+        run: bin/run.sh multiply-failing || true
 
       - name: Run syntax-error example
-        run: bin/run syntax-error || true
+        run: bin/run.sh syntax-error || true
 

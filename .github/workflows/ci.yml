@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'falcowinkler/clojure-runner' }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          # Make the image available in next step
+          load: true
+          tags: codewars-clojure-runner:latest
+
+      - name: Run multiply example
+        run: bin/run multiply
+
+      - name: Run multiply-failing example
+        run: bin/run multiply-failing || true
+
+      - name: Run syntax-error example
+        run: bin/run syntax-error || true
+
